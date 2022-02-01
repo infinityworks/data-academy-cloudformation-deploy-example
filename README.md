@@ -14,4 +14,4 @@ How to Deploy
 - Set deployment bucket environment name in `deploy.sh`
 - Authenticate to AWS with `aws sso login`
 - Set AWS_PROFILE value with `export AWS_PROFILE=<profilename>`
-- Run deployment with `.deploy.sh` 
+- Run deployment with `./deploy.sh` 
