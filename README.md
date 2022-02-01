@@ -1,2 +1,17 @@
-# data-academy-cloudformation-deploy-example
-Sample lambda application with scripts for cloudformation deployment from local
+## IP API Lambda
+
+### About
+
+Lambda function which returns the current public IP address of the lambda function by making a request to a third-party IP on the public Internet
+
+Documentation for the API is here [https://www.ipify.org/](https://www.ipify.org/)
+
+### Usage
+
+How to Deploy
+
+- Create and activate a Python virtual environment at version 3.9
+- Set deployment bucket environment name in `deploy.sh`
+- Authenticate to AWS with `aws sso login`
+- Set AWS_PROFILE value with `export AWS_PROFILE=<profilename>`
+- Run deployment with `.deploy.sh` 

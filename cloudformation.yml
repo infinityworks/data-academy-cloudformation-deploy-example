@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  Lambda function to retrieve IP Address by API Request to external service
+Parameters:
+  IpApiEndpointParameter:
+    Type: String
+    Default: https://api.ipify.org
+    Description: IP API endpoint address
+Resources:
+  LambdaFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+              - lambda.amazonaws.com
+          Action:
+            - sts:AssumeRole
+      Path: "/"
+      PermissionsBoundary: !Sub arn:aws:iam::${AWS::AccountId}:policy/ScopePermissions
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      Policies:
+      - PolicyName: LambdaLogsPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: '*'
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      #FunctionName: get-ip-lambda
+      Runtime: python3.9
+      Timeout: 5
+      Handler: app.get_ip_lambda.lambda_handler
+      Role: !GetAtt LambdaFunctionRole.Arn
+      Code: .deployment/lambda-package.zip
+      Environment:
+        Variables:
+          IP_API_ENDPOINT: !Ref IpApiEndpointParameter
