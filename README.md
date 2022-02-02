@@ -11,7 +11,11 @@ Documentation for the API is here [https://www.ipify.org/](https://www.ipify.org
 How to Deploy
 
 - Create and activate a Python virtual environment at version 3.9
-- Set deployment bucket environment name in `deploy.sh`
+- Create an S3 deployment bucket to use for deployment
+- Edit `deploy.sh` to change the variables for deployment bucket and stack_name name 
 - Authenticate to AWS with `aws sso login`
 - Set AWS_PROFILE value with `export AWS_PROFILE=<profilename>`
 - Run deployment with `./deploy.sh` 
+
+### What this stack Creates
+

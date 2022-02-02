@@ -1,8 +1,9 @@
 set -eu
 
-# CONFIGURATION
-environment_name=team0
+#### CONFIGURATION SECTION ####
+stack_name=team0
 deployment_bucket=gen-team0-deployment
+#### CONFIGURATION SECTION ####
 
 # Delete deploy dir if exists for a clean start
 if [ -d ".deployment" ]; then rm -rf .deployment; fi
@@ -22,4 +23,4 @@ cd ..
 aws cloudformation package --template-file cloudformation.yml --s3-bucket ${deployment_bucket} --output-template-file .deployment/cloudformation-packaged.yml
 
 # Deploy template
-aws cloudformation deploy --stack-name ${environment_name}-ip-lambda --template-file .deployment/cloudformation-packaged.yml --region eu-west-1 --capabilities CAPABILITY_IAM
+aws cloudformation deploy --stack-name ${stack_name}-ip-lambda --template-file .deployment/cloudformation-packaged.yml --region eu-west-1 --capabilities CAPABILITY_IAM --parameter-overrides NamePrefix=${stack_name} 

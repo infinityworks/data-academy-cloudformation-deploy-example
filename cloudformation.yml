@@ -6,8 +6,11 @@ Parameters:
     Type: String
     Default: https://api.ipify.org
     Description: IP API endpoint address
+  NamePrefix:
+    Type: String
+    Description: Prefix to be used for creating uniquely named resources
 Resources:
-  LambdaFunctionRole:
+  IpLambdaFunctionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -35,14 +38,14 @@ Resources:
               - logs:PutLogEvents
             Resource: '*'
 
-  LambdaFunction:
+  IpLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      #FunctionName: get-ip-lambda
+      FunctionName: !Sub ${NamePrefix}-get-ip-lambda
       Runtime: python3.9
       Timeout: 5
       Handler: app.get_ip_lambda.lambda_handler
-      Role: !GetAtt LambdaFunctionRole.Arn
+      Role: !GetAtt IpLambdaFunctionRole.Arn
       Code: .deployment/lambda-package.zip
       Environment:
         Variables:
