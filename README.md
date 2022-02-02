@@ -19,3 +19,5 @@ How to Deploy
 
 ### What this stack Creates
 
+- Python lambda function `IpLambdaFunction` 
+- Basic lambda role `IpLambdaFunctionRole` which allows the lambda function to execute and write logs
