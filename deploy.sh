@@ -21,7 +21,11 @@ cd ..
 
 # Package template and upload local resources (deployment package zip) to S3
 # A unique S3 filename is automatically generated each time
-aws cloudformation package --template-file cloudformation.yml --s3-bucket ${deployment_bucket} --output-template-file .deployment/cloudformation-packaged.yml
+aws cloudformation package --template-file cloudformation.yml \
+--s3-bucket ${deployment_bucket} \
+--output-template-file .deployment/cloudformation-packaged.yml
 
 # Deploy template
-aws cloudformation deploy --stack-name ${stack_name}-ip-lambda --template-file .deployment/cloudformation-packaged.yml --region eu-west-1 --capabilities CAPABILITY_IAM --parameter-overrides NamePrefix=${stack_name} 
+aws cloudformation deploy --stack-name ${stack_name}-ip-lambda \
+--template-file .deployment/cloudformation-packaged.yml --region eu-west-1 \
+--capabilities CAPABILITY_IAM --parameter-overrides NamePrefix=${stack_name} 
